@@ -1,35 +1,42 @@
-# hyperbuds-admin-dashboard
+# Next.js & HeroUI Template
 
-A Next.js 16 (App Router) admin dashboard with TypeScript, Tailwind CSS, and Lucide React icons.
+This is a template for creating applications using Next.js 15 (app directory) and HeroUI (v3).
 
-## Pages
+[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
 
-| Route | Description |
-|---|---|
-| `/` | Login page |
-| `/admin` | Dashboard – stats overview & recent activity |
-| `/admin/members` | Members management table |
-| `/admin/payments` | Payments & transactions |
-| `/admin/customer-support` | Support ticket tracker |
-| `/admin/reports` | Reports list & downloads |
+## Technologies Used
 
-## Getting Started
+- [Next.js 15](https://nextjs.org/docs/getting-started)
+- [HeroUI v3](https://heroui.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Tailwind Variants](https://tailwind-variants.org)
+- [TypeScript](https://www.typescriptlang.org/)
+- [next-themes](https://github.com/pacocoursey/next-themes)
+
+## How to Use
+
+### Use the template with create-next-app
+
+To create a new project based on this template using `create-next-app`, run the following command:
+
+```bash
+npx create-next-app -e https://github.com/heroui-inc/next-app-template
+```
+
+### Install dependencies
+
+You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
 
 ```bash
 npm install
+```
+
+### Run the development server
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+## License
 
-### Demo login credentials (development only)
-- **Email:** `admin@hyperbuds.com`
-- **Password:** `password`
-
-> ⚠️ Replace the hardcoded demo credentials in `src/app/page.tsx` with a real authentication provider before deploying to production.
-
-## Tech Stack
-
-- [Next.js 16](https://nextjs.org/) – App Router, TypeScript
-- [Tailwind CSS](https://tailwindcss.com/) – utility-first styling
-- [Lucide React](https://lucide.dev/) – icon library
+Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
