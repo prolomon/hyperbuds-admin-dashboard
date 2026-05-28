@@ -31,7 +31,7 @@ export default function LoginPage() {
 
     router.push("/admin/dashboard");
 
-    const res = await fetch(`http://localhost:4000/api/v1/auth/login`, {
+    const res = await fetch(`https://api-hyperbuds-backend.onrender.com/api/v1/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
