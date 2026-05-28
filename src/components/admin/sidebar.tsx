@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { Button, Avatar, Accordion, Tooltip } from "@heroui/react";
 import { usePathname, useRouter } from "next/navigation";
-
-import { ThemeSwitcher } from "@/components/theme-switch";
+import Image from "next/image";
+import Link from "next/link";
 
 const sidebarItems = [
   {
@@ -62,22 +62,29 @@ export function Sidebar() {
   const [isOpen, setIsOpen] = React.useState(true);
 
   const isActive = (path: string) => pathname === path;
+  const activeRowClass =
+    "bg-purple-700 text-white shadow-md shadow-purple-700/20";
+  const inactiveRowClass = "text-slate-700 hover:bg-slate-100";
 
   return (
     <aside
-      className={`bg-content1 border-r border-divider h-screen sticky top-0 transition-all duration-300 flex flex-col ${
+      className={`h-screen sticky top-0 transition-all duration-300 flex flex-col border-r border-slate-200 bg-white text-slate-900 shadow-[0_0_0_1px_rgba(15,23,42,0.02)] ${
         isOpen ? "w-64" : "w-20"
       }`}
     >
-      <div className="p-4 flex items-center justify-between">
-        {isOpen && (
-          <div className="flex items-center gap-2 font-bold text-xl overflow-hidden whitespace-nowrap">
-            <div className="bg-primary p-1.5 rounded-lg shrink-0">
-              <LayoutDashboard className="text-primary-foreground" size={20} />
+      <div className="flex items-center justify-between border-b border-slate-200/80 px-4 py-4">
+        <div className="flex items-center gap-3">
+          <Link className="flex items-center gap-3" href="/admin/dashboard">
+            <div className="rounded-xl overflow-hidden ring-1 ring-slate-200 shadow-sm">
+              <Image alt="Hyperbuds" height={40} src="/logo.png" width={40} />
             </div>
-            <span>Unified Portal</span>
-          </div>
-        )}
+            {isOpen && (
+              <span className="font-semibold tracking-tight text-[15px]">
+                Hyperbuds
+              </span>
+            )}
+          </Link>
+        </div>
         <Button
           isIconOnly
           className={!isOpen ? "mx-auto" : ""}
@@ -88,34 +95,48 @@ export function Sidebar() {
         </Button>
       </div>
 
-      <div className="flex-grow overflow-y-auto py-4 px-3 flex flex-col gap-2">
+      <div className="flex-grow overflow-y-auto px-3 py-4 flex flex-col gap-2">
         {sidebarItems.map((item) => {
           if (item.children) {
             return (
               <Accordion key={item.title} className="px-0">
                 <Accordion.Item key={item.title}>
                   <Accordion.Heading>
-                    <Accordion.Trigger className="w-full flex items-center gap-2 py-2 px-3 hover:bg-default-100 rounded-lg">
-                      {item.icon}
-                      {isOpen && (
-                        <span className="text-sm font-medium">
-                          {item.title}
-                        </span>
-                      )}
+                    <Accordion.Trigger className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 hover:bg-slate-100">
+                      <div className="flex items-center gap-3">
+                        <span className="text-slate-500">{item.icon}</span>
+                        {isOpen && (
+                          <span className="text-sm font-medium text-slate-700">
+                            {item.title}
+                          </span>
+                        )}
+                      </div>
                     </Accordion.Trigger>
                   </Accordion.Heading>
                   <Accordion.Panel>
-                    <div className="flex flex-col gap-1 pl-6 pt-1">
+                    <div className="flex flex-col gap-1.5 pl-6 pt-1.5">
                       {item.children.map((child) => (
                         <Button
                           key={child.href}
                           fullWidth
-                          className="justify-start gap-2 h-9 px-2"
+                          className={`justify-start gap-2 h-10 px-3 rounded-xl ${
+                            isActive(child.href)
+                              ? activeRowClass
+                              : inactiveRowClass
+                          }`}
                           size="sm"
-                          variant={isActive(child.href) ? "primary" : "ghost"}
+                          variant="ghost"
                           onPress={() => router.push(child.href)}
                         >
-                          {child.icon}
+                          <span
+                            className={
+                              isActive(child.href)
+                                ? "text-white"
+                                : "text-slate-500"
+                            }
+                          >
+                            {child.icon}
+                          </span>
                           {isOpen && <span>{child.title}</span>}
                         </Button>
                       ))}
@@ -129,19 +150,38 @@ export function Sidebar() {
           const content = (
             <Button
               fullWidth
-              className={`justify-start gap-3 p-3 h-12 ${!isOpen ? "justify-center" : ""}`}
-              variant={isActive(item.href || "") ? "primary" : "ghost"}
+              className={`justify-start gap-3 h-11 rounded-xl px-3 ${
+                !isOpen ? "justify-center" : ""
+              } ${isActive(item.href || "") ? activeRowClass : inactiveRowClass}`}
+              variant="ghost"
               onPress={() => router.push(item.href || "#")}
             >
-              {item.icon}
+              <span
+                className={
+                  isActive(item.href || "") ? "text-white" : "text-slate-500"
+                }
+              >
+                {item.icon}
+              </span>
               {isOpen && (
-                <span className="font-medium text-sm">{item.title}</span>
+                <span
+                  className={`font-medium text-sm ${
+                    isActive(item.href || "") ? "text-white" : "text-slate-700"
+                  }`}
+                >
+                  {item.title}
+                </span>
               )}
             </Button>
           );
 
           return isOpen ? (
-            <div key={item.title}>{content}</div>
+            <div key={item.title} className="relative">
+              {isActive(item.href || "") && (
+                <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-md bg-blue-600" />
+              )}
+              {content}
+            </div>
           ) : (
             <Tooltip key={item.title}>
               <Tooltip.Trigger>{content}</Tooltip.Trigger>
@@ -151,7 +191,7 @@ export function Sidebar() {
         })}
       </div>
 
-      <div className="p-4 border-t border-divider flex flex-col gap-4">
+      <div className="flex flex-col gap-4 border-t border-slate-200/80 p-4">
         <div
           className={`flex items-center ${isOpen ? "justify-between" : "justify-center"}`}
         >
@@ -161,10 +201,10 @@ export function Sidebar() {
                 <Avatar.Image src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
               </Avatar>
               <div className="flex flex-col">
-                <span className="text-xs font-bold whitespace-nowrap overflow-hidden">
+                <span className="text-xs font-semibold whitespace-nowrap overflow-hidden text-slate-800">
                   John Doe
                 </span>
-                <span className="text-[10px] text-default-500">Admin</span>
+                <span className="text-[10px] text-slate-500">Admin</span>
               </div>
             </div>
           )}
@@ -173,18 +213,12 @@ export function Sidebar() {
               <Avatar.Image src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
             </Avatar>
           )}
-          {isOpen && <ThemeSwitcher />}
         </div>
-        {!isOpen && (
-          <div className="flex justify-center">
-            <ThemeSwitcher />
-          </div>
-        )}
         <Button
           className={!isOpen ? "mx-auto" : ""}
-          variant="danger"
           fullWidth={isOpen}
           isIconOnly={!isOpen}
+          variant="ghost"
           onPress={() => router.push("/")}
         >
           <LogOut size={20} />

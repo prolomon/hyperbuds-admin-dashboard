@@ -8,10 +8,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
 
 export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
+  title: "Hyperbuds | Administrator Portal",
   description: siteConfig.description,
   icons: {
     icon: "/favicon.ico",
@@ -39,7 +36,14 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Providers
+          themeProps={{
+            attribute: "class",
+            defaultTheme: "light",
+            enableSystem: false,
+            forcedTheme: "light",
+          }}
+        >
           {children}
         </Providers>
       </body>

@@ -1,7 +1,5 @@
 "use client";
-
 import React from "react";
-import { use } from "react";
 import {
   Button,
   Card,
@@ -12,18 +10,14 @@ import {
 } from "@heroui/react";
 import { ArrowLeft, Mail, Phone, MapPin, Calendar, Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
+// import EditCollaboratorForm from "@/components/admin/EditCollaboratorForm";
 
-export default function CollaboratorDetailsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
+export default function CollaboratorDetailsPage() {
   const router = useRouter();
 
   // In a real app, you would fetch data based on ID
   const user = {
-    id,
+    id: "1",
     name: "Tony Reichert",
     role: "CEO",
     team: "Management",
@@ -89,7 +83,6 @@ export default function CollaboratorDetailsPage({
                 </div>
               </div>
             </div>
-
             <Separator />
 
             <div>
@@ -122,6 +115,11 @@ export default function CollaboratorDetailsPage({
                     <p className="text-small font-medium">{user.team}</p>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-6">
+                <h4 className="text-sm font-medium mb-2">Edit Collaborator</h4>
+                {/* <EditCollaboratorForm initialUser={user} id={id} /> */}
               </div>
             </div>
           </CardContent>

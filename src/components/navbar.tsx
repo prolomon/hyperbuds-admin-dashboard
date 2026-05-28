@@ -6,7 +6,6 @@ import NextLink from "next/link";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
-import { ThemeSwitcher } from "@/components/theme-switch";
 import {
   TwitterIcon,
   GithubIcon,
@@ -86,7 +85,6 @@ export const Navbar = () => {
           >
             <GithubIcon className="text-muted" />
           </Link>
-          <ThemeSwitcher />
           <div className="hidden lg:flex">{searchInput}</div>
           <div className="hidden md:flex">
             <Button
@@ -109,7 +107,6 @@ export const Navbar = () => {
           >
             <GithubIcon className="text-muted" />
           </Link>
-          <ThemeSwitcher />
           <button
             aria-expanded={isMenuOpen}
             aria-label="Toggle menu"
